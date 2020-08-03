@@ -1,0 +1,238 @@
+:root {
+  --healthy: hsl(76, 56%, 61%);
+  --infected: hsl(352, 67%, 57%);
+  --recovered: hsl(196, 100%, 47%);
+  --dead: hsl(0, 0%, 10%);
+
+  --display-scale: 1;
+  --pixel: 1px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 1.5dppx) {
+  :root {
+    --display-scale: 2;
+    --pixel: 0.5px;
+  }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2.5),
+       only screen and (min-resolution: 2.5dppx) {
+  :root {
+    --display-scale: 3;
+    --pixel: 0.34px;
+  }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3.5),
+       only screen and (min-resolution: 3.5dppx) {
+  :root {
+    --display-scale: 4;
+    --pixel: 0.25px;
+  }
+}
+
+canvas {
+  max-width: 100% !important;
+}
+
+[style*="--marked-bg"] {
+  display: inline-block;
+  position: relative;
+  margin: 0 0.05em;
+}
+
+[style*="--marked-bg"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -0.15em;
+  bottom: 0;
+  left: -0.15em;
+  background-color: var(--marked-bg, var(--black));
+  z-index: -1;
+}
+
+.gap-responsive {
+  --gap-h: var(--space-m);
+}
+
+@media (min-width: 640px) {
+  .gap-responsive {
+    --gap-h: var(--space-l);
+  }
+}
+
+@media (max-width: 639.98px) {
+  .simulations-columns :first-child .simulation {
+    margin-left: calc(-1 * var(--space-m) - var(--pixel));
+  }
+  .simulations-columns :last-child .simulation {
+    margin-right: calc(-1 * var(--space-m) - var(--pixel));
+  }
+}
+
+.simulation-heading {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.simulation {
+  position: relative;
+}
+
+.simulation [id^="sim"] {
+  border: var(--pixel) solid var(--black);
+}
+
+.simulation-overlay {
+  position: absolute;
+  top: var(--pixel);
+  right: var(--pixel);
+  bottom: var(--pixel);
+  left: var(--pixel);
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.running .simulation-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.simulation-overlay > * {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+.running .simulation-overlay > * {
+  transform: scale(2);
+  opacity: 0;
+}
+
+.simulation [data-canvas-population] {
+  position: relative;
+}
+
+.simulation [data-canvas-population]::before {
+  content: attr(data-canvas-population);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: hsl(0, 0%, 92%);
+  transform: translate(-50%, -50%);
+  font-size: 16vw;
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  z-index: -1;
+}
+
+@media (min-width: 1024px) {
+  .simulation [data-canvas-population]::before {
+    font-size: 11rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .simulation-legend {
+    font-size: var(--text-xl);
+  }
+}
+
+.licence svg {
+  height: 1.5em;
+}
+
+.range {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  width: 100%;
+  height: 3.375em;
+  font: 1em/1 var(--font-family-heading);
+}
+
+[type="range"] {
+  -webkit-appearance: none;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  min-height: 1.5em;
+  background: transparent;
+  font: inherit;
+}
+
+[type="range"]:focus {
+  outline: none;
+}
+
+[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+[type="range"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--color-primary);
+}
+
+[type="range"]:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--color-primary);
+}
+
+[type="range"]::-webkit-slider-runnable-track {
+  border: none;
+  width: 100%;
+  height: 0.25em;
+  background: var(--gray);
+}
+
+[type="range"]::-moz-range-track {
+  border: none;
+  width: 100%;
+  height: 0.25em;
+  background: var(--gray);
+}
+
+[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-top: -0.625em;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--color-link);
+  transition: box-shadow 0.15s ease-in-out;
+  cursor: move;
+}
+
+[type="range"]::-moz-range-thumb {
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--color-link);
+  transition: box-shadow 0.15s ease-in-out;
+  cursor: move;
+}
+
+[type="range"] ~ output {
+  display: none;
+}
+
+.js [type="range"] ~ output {
+  display: block;
+  position: absolute;
+  left: 0.75em;
+  top: 0;
+  padding: .25em .5em;
+  background: var(--color-link);
+  color: white;
+  transform: translate(calc((var(--val) - var(--min)) / (var(--max) - var(--min)) * var(--width) - 50%));
+  z-index: 20;
+}
+
+.footer {
+  --color-link: var(--color-text);
+}

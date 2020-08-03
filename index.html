@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title data-i18n="title">Coronavirus Simulation</title>
+
+  <meta name="description" content="This simple simulation shows how social distancing helps slow the spread of viruses.">
+
+  <meta name="theme-color" content="#00b0f0">
+  <meta name="apple-mobile-web-app-title" content="Coronavirus Simulation">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" sizes="180x180">
+
+  <link href="css/kds.css" rel="stylesheet">
+  <link href="css/main.css?v6" rel="stylesheet">
+  <link href="fonts/Oswald.css" rel="stylesheet">
+  <link rel="preload" href="fonts/Oswald.var.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script>
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+    document.documentElement.classList.add('js')
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54672044-8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag () { dataLayer.push(arguments) }
+    gtag('js', new Date())
+    gtag('config', 'UA-54672044-8', { anonymize_ip: true, storage: 'none' })
+  </script>
+
+</head>
+
+<body>
+
+  <header class="mb-m">
+    <div class="skewed-header" style="--bg: var(--black);">
+      <h1 class="text-white text-xxl" data-i18n="header">Coronavirus Spreading…</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="mb-l" aria-hidden="true">
+      <div class="container-md">
+        <div class="simulations-columns columns gap-responsive">
+
+          <div class="span-half position-relative">
+            <h2 class="simulation-heading text-xl py-m ml-s">
+              <span class="text-white" style="--marked-bg: var(--infected);" data-i18n="without">Without</span>
+              <span data-i18n="socialDistancing">Social Distancing</span>
+            </h2>
+            <div class="simulation">
+              <div class="simulation-overlay centered-content">
+                <div class="d-flex text-hero align-items-center" role="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.456 50.065" style="height: 1em;" aria-hidden="true"><path d="M42.456,28.837A21.228,21.228,0,1,1,3.186,17.692l6.883,3.979a13.255,13.255,0,1,0,14.542-5.63l0,6.759L4.873,11.39,24.62,0l0,7.587v.32A21.212,21.212,0,0,1,42.456,28.837Z" /></svg>
+                  <span class="sr-only">Restart</span>
+                </div>
+              </div>
+              <div data-canvas-population="200">
+                <canvas id="sim0" class="d-block" width="400" height="800" data-population="200" data-movers="200"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="span-half position-relative">
+            <h2 class="simulation-heading text-xl py-m ml-s">
+              <span class="text-white" style="--marked-bg: var(--healthy);" data-i18n="with">With</span>
+              <span data-i18n="socialDistancing">Social Distancing</span>
+            </h2>
+            <div class="simulation">
+              <div class="simulation-overlay centered-content">
+                <div class="d-flex text-hero align-items-center" role="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.456 50.065" style="height: 1em;" aria-hidden="true"><path d="M42.456,28.837A21.228,21.228,0,1,1,3.186,17.692l6.883,3.979a13.255,13.255,0,1,0,14.542-5.63l0,6.759L4.873,11.39,24.62,0l0,7.587v.32A21.212,21.212,0,0,1,42.456,28.837Z" /></svg>
+                  <span class="sr-only">Restart</span>
+                </div>
+              </div>
+              <div data-canvas-population="25">
+                <canvas id="sim1" class="d-block" width="400" height="800" data-population="200" data-movers="25"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-md">
+        <div class="mt-s mb-l">
+          <div class="range" style="--min: 0; --max: 200; --val: 25;">
+            <input id="range-movers" data-ref="sim1" type="range" min="0" max="200" value="25">
+            <output for="range-movers">25</output>
+          </div>
+          <label for="range-movers" class="d-block text-heading" data-i18n="range">Number of people moving freely on the right</label>
+        </div>
+
+        <div class="columns gap-responsive">
+          <div class="span-half">
+            <canvas data-ref="sim0" class="mb-s" width="800" height="200"></canvas>
+            <p class="simulation-legend text-heading lh-heading" data-ref="sim0"></p>
+          </div>
+
+          <div class="span-half">
+            <canvas data-ref="sim1" class="mb-s" width="800" height="200"></canvas>
+            <p class="simulation-legend text-heading lh-heading" data-ref="sim1"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+<script src="./js/kds.js"></script>
+<script src="./js/app.js?v6" type="module"></script>
+
+</body>
+</html>
